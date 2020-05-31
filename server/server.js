@@ -1,6 +1,7 @@
 require('./config/config');
 
 const express = require('express');
+const mongoose = require('mongoose');
 const app = express();
 const bodyParser = require('body-parser');
 
@@ -9,34 +10,18 @@ app.use(bodyParser.urlencoded({ extended: false })); // app.use is a middleware,
 // parse application/json
 app.use(bodyParser.json());
 
-app.get('/user', (req, res) => {
-    res.json('get user');
-});
-
-app.post('/user', (req, res) => {
-    let body = req.body; //body-parser will parse this or any payload when it came on request
-    if(!body.name){
-        res.status(400).json({
-           ok: false,
-           message: 'Name is required'
-        });
-    }
-    res.json({
-        persona: body
-    });
-});
-
-app.put('/user/:id', (req, res) => {
-    let id = req.params.id;
-    res.json({
-        id
-    });
-});
-
-app.delete('/user', (req, res) => {
-    res.json('delete user');
-});
+app.use(require('./routes/user'));
 
 app.listen(process.env.PORT, () => {
-   console.log(`Escuchando puerto: ${process.env.PORT}`);
+    console.log(`Escuchando puerto: ${process.env.PORT}`);
+    mongoose.connect(process.env.URL_DB, {
+        useCreateIndex: true,
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    }).then(res => {
+        // console.log(res);
+        console.log(`Database ONLINE`);
+    }).catch(err => {
+        console.log(err);
+    });
 });
