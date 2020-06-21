@@ -7,7 +7,12 @@ let verifyToken = (req, res, next) => {
     let token = req.get('Authorization') || null;
     jwt.verify(token, process.env.TOKEN_SEED, (err, decoded) => {
         if (err) {
-            return res.status(401).json({ ok: false, err });
+            return res.status(401).json({
+                ok: false,
+                err: {
+                    message: 'Token not found on request'
+                }
+            });
         }
         req.user = decoded.user;
         next();
