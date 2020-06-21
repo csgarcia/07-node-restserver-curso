@@ -7,17 +7,20 @@ const bodyParser = require('body-parser');
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false })); // app.use is a middleware, basically functions that will executed when code passes on here
+
 // parse application/json
 app.use(bodyParser.json());
 
-app.use(require('./routes/user'));
+//routes
+app.use(require('./routes/index'));
 
 app.listen(process.env.PORT, () => {
     console.log(`Escuchando puerto: ${process.env.PORT}`);
     mongoose.connect(process.env.URL_DB, {
         useCreateIndex: true,
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useFindAndModify: false
     }).then(res => {
         // console.log(res);
         console.log(`Database ONLINE`);

@@ -47,6 +47,18 @@ let update = (id, bodyPut) => {
                 });
                 return;
             }
+            if (!userDb) {
+                resolve({
+                    code: 400,
+                    data: {
+                        ok: false,
+                        err: {
+                            message: `User not found for this id: ${id}`
+                        }
+                    }
+                });
+                return;
+            }
             resolve({
                 code: 200,
                 data: {
@@ -132,9 +144,22 @@ let remove = (id) => {
     });
 };
 
+let login = () => {
+    return new Promise((resolve, reject) => {
+        resolve({
+            code: 200,
+            data: {
+                ok: true
+            }
+        });
+    });
+};
+
+
 module.exports = {
     create,
     update,
     getAll,
-    remove
+    remove,
+    login
 };
