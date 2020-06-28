@@ -12,14 +12,8 @@ app.post('/login', (req, res) => {
 app.post('/google', (req, res) => {
     let token = req.body.idtoken || null;
     loginCore.google(token)
-        .then(response => {
-            console.log(response);
-            res.status(response.code).json(response.data);
-        })
-        .catch(error => {
-            console.log(error);
-            res.status(400).json({ ok: false, error });
-        });
+        .then(response => res.status(response.code).json(response.data))
+        .catch(error => res.status(400).json({ ok: false, error }));
 });
 
 module.exports = app;

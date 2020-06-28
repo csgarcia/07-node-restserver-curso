@@ -20,7 +20,7 @@ process.env.URL_DB = urlDb;
 // ===================== //
 // Token expiration time //
 // ===================== //
-process.env.TOKEN_EXPIRATION_TIME = 60 * 60 * 24 * 30; //30 days
+process.env.TOKEN_EXPIRATION_TIME = '48h';
 
 // ===================== //
 // Seed token //
